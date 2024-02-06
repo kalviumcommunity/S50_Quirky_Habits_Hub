@@ -1,11 +1,11 @@
 {
   "name": "quirky_habits_hub",
   "version": "1.0.0",
-  "description": "",
+  "description": "This platform allows individuals to share and submit their weirdest habits, whether they are their own or observed in others.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Muhammed Musthafa CP",
   "license": "ISC"
 }
