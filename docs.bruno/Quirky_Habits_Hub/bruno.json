@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Quirky_Habits_Hub",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
