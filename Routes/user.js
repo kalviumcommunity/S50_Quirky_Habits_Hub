@@ -10,8 +10,8 @@ router.get("/users", async (req, res) => {
     const data = await usermodel.find();
     res.json(data);
   } catch (error) {
-    console.error("An error occurred:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("An error occurred with the GET method while getting the user data:", error);
+    res.status(500).json({ error: "Internal Server Error with the GET method while getting the user data" });
   }
 });
 
@@ -21,8 +21,8 @@ router.post("/users", async (req, res) => {
     const data = await usermodel.create(req.body);
     res.json(data);
   } catch (err) {
-    console.log("An error is caught", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.log("An error is caught with the POST method while posting the user data", err);
+    res.status(500).json({ error: "Internal Server Error with the POST method while posting the user data" });
   }
 });
 
