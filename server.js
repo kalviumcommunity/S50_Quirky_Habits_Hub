@@ -1,15 +1,18 @@
-const express = require("express")
-const app = express()
-const port = 3000
+const express = require("express");
+const app = express();
+const port = 3001;
+const connectDB = require("./config/connect")
+const pingrouter = require("./Routes/ping");
+const userrouter = require("./Routes/user");
 
-app.get('/ping',(req,res)=>{
-    res.send("<h1>Pong</h1>")
-})
 
-if(require.main == module){
-    app.listen(port,()=>{
-        console.log(`server is running on localhost ${port}`)
-    })
-}
 
-module.exports = app;
+connectDB()
+app.use(express.json());
+app.use("/", pingrouter);
+app.use("/", userrouter);
+
+
+app.listen(port, () => {
+  console.log(`server is running on localhost ${port}`);
+});
