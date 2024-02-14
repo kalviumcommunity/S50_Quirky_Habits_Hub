@@ -10,15 +10,20 @@ router.get("/users", async (req, res) => {
     const data = await usermodel.find();
     res.json(data);
   } catch (error) {
-    console.log(error, "An error identified");
+    console.error("An error occurred:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 router.post("/users", async (req, res) => {
-  console.log(req.body);
-  const data = await usermodel.create(req.body);
-
-  res.json(data);
+  try {
+    console.log(req.body);
+    const data = await usermodel.create(req.body);
+    res.json(data);
+  } catch (err) {
+    console.log("An error is caught", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 module.exports = router;
