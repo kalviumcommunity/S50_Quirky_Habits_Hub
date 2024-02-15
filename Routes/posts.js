@@ -12,7 +12,7 @@ router.get("/posts", async (req, res) => {
   } catch (error) {
     console.error("An error occurred while getting the post details:", error);
     res.status(500).json({ error: "Internal Server Error with the GET method of getting the post details" });
-  }
+  } 
 });
 
 router.post("/posts", async (req, res) => {
@@ -25,5 +25,8 @@ router.post("/posts", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error with the POST method of submitting the post details " });
   }
 });
+
+
+
 
 module.exports = router;
