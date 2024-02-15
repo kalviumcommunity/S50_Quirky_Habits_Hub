@@ -5,8 +5,6 @@ const app = express();
 
 app.use(express.json());
 
-
-
 // GET REQUEST
 router.get("/users", async (req, res) => {
   try {
@@ -17,16 +15,12 @@ router.get("/users", async (req, res) => {
       "An error occurred with the GET method while getting the user data:",
       error
     );
-    res
-      .status(500)
-      .json({
-        error:
-          "Internal Server Error with the GET method while getting the user data",
-      });
+    res.status(500).json({
+      error:
+        "Internal Server Error with the GET method while getting the user data",
+    });
   }
 });
-
-
 
 // GET REQUEST ACCORDING ID
 router.get("/users/:id", async (req, res) => {
@@ -41,16 +35,12 @@ router.get("/users/:id", async (req, res) => {
     res.json(userData);
   } catch (error) {
     console.error("An error occurred while getting the user details:", error);
-    res
-      .status(500)
-      .json({
-        error:
-          "Internal Server Error with the GET method of getting the user details",
-      });
+    res.status(500).json({
+      error:
+        "Internal Server Error with the GET method of getting the user details",
+    });
   }
 });
-
-
 
 // POST REQUEST
 router.post("/users", async (req, res) => {
@@ -63,16 +53,12 @@ router.post("/users", async (req, res) => {
       "An error is caught with the POST method while posting the user data",
       err
     );
-    res
-      .status(500)
-      .json({
-        error:
-          "Internal Server Error with the POST method while posting the user data",
-      });
+    res.status(500).json({
+      error:
+        "Internal Server Error with the POST method while posting the user data",
+    });
   }
 });
-
-
 
 //PUT
 router.put("/users/:id", async (req, res) => {
@@ -98,15 +84,11 @@ router.put("/users/:id", async (req, res) => {
     res.json(updatedData);
   } catch (error) {
     console.error("An error occurred while updating the user:", error);
-    res
-      .status(500)
-      .json({
-        error: "Internal Server Error with the PUT method of updating the user",
-      });
+    res.status(500).json({
+      error: "Internal Server Error with the PUT method of updating the user",
+    });
   }
 });
-
-
 
 // PATCH
 
@@ -143,12 +125,9 @@ router.patch("/users/:id", async (req, res) => {
     res.json(updatedData);
   } catch (error) {
     console.error("An error occurred while updating the user:", error);
-    res
-      .status(500)
-      .json({
-        error:
-          "Internal Server Error with the PATCH method of updating the user",
-      });
+    res.status(500).json({
+      error: "Internal Server Error with the PATCH method of updating the user",
+    });
   }
 });
 
