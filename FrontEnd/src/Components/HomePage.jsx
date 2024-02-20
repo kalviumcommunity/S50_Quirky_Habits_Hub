@@ -2,28 +2,28 @@ import React, { useState, useEffect } from "react";
 import WLOGO from "../Assets/WLOGO.png";
 import BLOGO from "../Assets/BLOGO.png";
 import axios from "axios";
-import datajson from "../Components/data.json";
+import datajson from "./data.json";
 
 function HomePage() {
   const [userData, setUserData] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get("http://localhost:3000/posts");
-  //       console.log(res);
-  //       setUserData(res.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data", error);
-  //     }
-  //   };
-  
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
-    setUserData(datajson);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/posts");
+        console.log(res);
+        setUserData(res.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+  
+    fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   setUserData(datajson);
+  // }, []);
 
   return (
     <>
@@ -171,8 +171,8 @@ function HomePage() {
                     <h2 className="mt-10">{user.reactions}</h2>
                   </div>
                 </div>
-                <h3>Title of the Post: {user.title}</h3>
-                <p>Description: {user.content}</p>
+                <h3 className="text-cyan-950 text-xl my-2">{user.title}</h3>
+                <p className="text-base"> <span className="text-xl">Description: </span> {user.content}</p>
               </div>
             ))}
           </div>
