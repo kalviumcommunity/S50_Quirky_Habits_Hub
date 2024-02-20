@@ -5,8 +5,10 @@ const connectDB = require("./config/connect")
 const pingrouter = require("./Routes/ping");
 const userrouter = require("./Routes/user");
 const postrouter = require("./Routes/posts");
+const cors = require('cors');
 
 
+app.use(cors());
 
 
 connectDB()

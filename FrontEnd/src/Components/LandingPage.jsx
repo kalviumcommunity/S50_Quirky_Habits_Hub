@@ -1,16 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ProjectIdea() {
+
   return (
     <>
-      <div className="relative overflow-hidden">
+      <div className="">
         <div className="pb-80 pt-16 sm:pb-40  sm:pt-24 lg:pb-48 lg:pt-40">
-          <div className="relative mx-auto  max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
+          <div className="mx-auto  max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
             <div className="sm:max-w-lg">
-              <h2 className="font-bold text-7xl bouncing tracking-tight text-gray-900">
+              <h2 className="font-bold text-7xl bouncing tracking-tight text-cyan-950">
                 Quirky Habits Hub
               </h2>
-              <p className="mt-6 text-xl text-gray-500 bouncing">
+              <p className="mt-6 text-xl text-cyan-950 bouncing cursor-pointer">
                 Explore the enchanting world of unique behaviors. From
                 bizarrerituals to charming routines, discover the delightful
                 diversity of human habits. Join our vibrant community and
@@ -19,9 +21,7 @@ function ProjectIdea() {
             </div>
             <div>
               <div className="mt-10">
-
-
-               <div
+                <div
                   aria-hidden="true"
                   className="lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
                 >
@@ -30,7 +30,7 @@ function ProjectIdea() {
                       <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                         <div className="picturemoving1 h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
                           <img
-                          src="https://i.ytimg.com/vi/ewzF7MIlEDY/maxresdefault.jpg"
+                            src="https://i.ytimg.com/vi/ewzF7MIlEDY/maxresdefault.jpg"
                             alt=""
                             className=" h-full w-full object-cover object-center"
                           />
@@ -86,9 +86,12 @@ function ProjectIdea() {
                   </div>
                 </div>
 
-                <button className="bouncing bg-black hover:bg-white cursor-pointer rounded-md duration-500 px-10 py-3 text-center font-medium text-white">
+                <Link
+                  to="/HomePage"
+                  className="border bouncing fixed border-cyan-950 text-cyan-950 rounded-md px-12 hover:shadow-lg duration-300 py-3 text-center font-medium"
+                >
                   Get Started
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -99,7 +102,3 @@ function ProjectIdea() {
 }
 
 export default ProjectIdea;
-
-{
-  /**/
-}
