@@ -13,9 +13,9 @@ app.use(cors());
 
 connectDB()
 app.use(express.json());
-app.use("/", pingrouter);
-app.use("/", userrouter);
-app.use("/", postrouter);
+app.use("/ping", pingrouter);
+app.use("/users", userrouter);
+app.use("/posts", postrouter);
 
 
 

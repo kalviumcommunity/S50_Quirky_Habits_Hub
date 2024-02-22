@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // GET REQUEST
-router.get("/users", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const data = await usermodel.find();
     res.json(data);
@@ -23,7 +23,7 @@ router.get("/users", async (req, res) => {
 });
 
 // GET REQUEST ACCORDING ID
-router.get("/users/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const userID = req.params.id;
     const userData = await usermodel.findById(userID);
@@ -43,10 +43,10 @@ router.get("/users/:id", async (req, res) => {
 });
 
 // POST REQUEST
-router.post("/users", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     console.log(req.body);
-    const data = await usermodel.create(req.body);
+    const data = await usermodel.create(req.body.data);
     res.json(data);
   } catch (err) {
     console.log(
@@ -61,7 +61,7 @@ router.post("/users", async (req, res) => {
 });
 
 //PUT
-router.put("/users/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const updatedData = await usermodel.findByIdAndUpdate(
@@ -92,7 +92,7 @@ router.put("/users/:id", async (req, res) => {
 
 // PATCH
 
-router.patch("/users/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -133,7 +133,7 @@ router.patch("/users/:id", async (req, res) => {
 
 //DELETE ACCORDING ID
 
-router.delete("/users/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   await usermodel.findByIdAndDelete(id);
   res.status(201).json({
