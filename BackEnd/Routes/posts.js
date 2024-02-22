@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
 
 // GET ACCORDING THE ID
 
-router.get("//:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const postId = req.params.id;
     const post = await postmodel.findById(postId);
@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
 
 // PUT
 
-router.put("//:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const updatedData = await postmodel.findByIdAndUpdate(
@@ -102,7 +102,7 @@ router.put("//:id", async (req, res) => {
 
 // PATCH
 
-router.patch("//:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -144,7 +144,7 @@ router.patch("//:id", async (req, res) => {
 
 //DELETE
 
-router.delete("//:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     await postmodel.findByIdAndDelete(id);
