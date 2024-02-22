@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @keyframes bounce {
   0%,
   100% {
@@ -16,6 +17,11 @@
 
 .bouncing {
     animation: slidefromRight 2s ease-in-out;
+}
+
+.pfcard{
+  /* width: 1000px; */
+  /* height: 520px; */
 }
 
 
@@ -78,11 +84,24 @@
   }
 
 
+  input{
+    outline: none;
+  }
+
   .sidebar{
-    width: 20%;
+    width: 400px;
     height: 87vh;
   }
 
   .posts{
     height: 520px;
+  }
+
+  body{
+    overflow: hidden;
+  }
+
+  .users{
+    height: 520px;
+    width: 70%;
   }

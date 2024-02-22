@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 
-router.get("/ping", (req, res) => {
+router.get("/", (req, res) => {
   console.log("Received a request to /ping");
   res.send("<h1>Pong</h1>");
 });

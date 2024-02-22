@@ -9,7 +9,7 @@ app.use(express.json());
 
 // GET
 
-router.get("/posts", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const data = await postmodel.find();
     res.json(data);
@@ -28,7 +28,7 @@ router.get("/posts", async (req, res) => {
 
 // GET ACCORDING THE ID
 
-router.get("/posts/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const postId = req.params.id;
     const post = await postmodel.findById(postId);
@@ -48,7 +48,7 @@ router.get("/posts/:id", async (req, res) => {
 
 // POST
 
-router.post("/posts", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     console.log(req.body);
     const data = await postmodel.create(req.body);
@@ -68,7 +68,7 @@ router.post("/posts", async (req, res) => {
 
 // PUT
 
-router.put("/posts/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const updatedData = await postmodel.findByIdAndUpdate(
@@ -102,7 +102,7 @@ router.put("/posts/:id", async (req, res) => {
 
 // PATCH
 
-router.patch("/posts/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -144,7 +144,7 @@ router.patch("/posts/:id", async (req, res) => {
 
 //DELETE
 
-router.delete("/posts/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     await postmodel.findByIdAndDelete(id);
