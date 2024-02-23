@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import Dashbord from "./SideBar/Dashbord";
-import Favorites from "./SideBar/Favorites";
+import Posts from "./SideBar/Posts";
 import RankList from "./SideBar/RankList";
 import Users from "./SideBar/Users";
 import LogOut from "./SideBar/LogOut";
@@ -10,15 +10,35 @@ import Settings from "./SideBar/Settings";
 import WLOGO from "../Assets/WLOGO.png";
 import BLOGO from "../Assets/BLOGO.png";
 import Profile from "./SideBar/Profile";
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const [activeComponent, setActiveComponent] = useState("home");
+  const [userData, setUserData] = useState("");
 
   const handleClick = (event) => {
     const spanContent = event.currentTarget.querySelector("span").textContent;
     setActiveComponent(spanContent.toLowerCase());
   };
 
+  useEffect(() => {
+    const storedUserData = Cookies.get('userData');
+    console.log(storedUserData)
+    if (storedUserData) {
+      const parsedUserData = JSON.parse(storedUserData);
+      setUserData(parsedUserData);
+    }
+  }, []);
+
+  const navigate = useNavigate();
+
+
+
+  const openProfile = (e) => {
+    console.log("clicked")
+    navigate('/profile');
+  }
  
 
   const renderActiveComponent = () => {
@@ -27,18 +47,23 @@ function HomePage() {
         return <Dashbord />;
       case "users":
         return <Users  />;
-      case "favorites":
-        return <Favorites />;
+      case "posts":
+        return <Posts />;
       case "rank list":
         return <RankList />;
       case "settings":
         return <Settings />;
-      case "logout":
-        return <LogOut />;
       default:
         return null;
     }
   };
+
+  const removeUserDataCookie = () => {
+    Cookies.remove('userData');
+    alert('Logged Out Succussfully!');
+    window.location.reload()
+  };
+
 
   return (
     <>
@@ -65,15 +90,15 @@ function HomePage() {
       <div className="flex">
         <aside className="sidebar border-r border-cyan-500 ">
           <ul className="pt-3 pb-4 space-y-1 text-cyan-950 text-sm ">
-            <li className="flex pl-5 items-center py-3 m-2 cursor-pointer hover:shadow-2xl hover:border hover:border-cyan-500 duration-700 hover:rounded-lg">
+            <li onClick={(e) => openProfile(e)} className="flex pl-5 items-center py-3 m-2 cursor-pointer hover:shadow-2xl hover:border hover:border-cyan-500 duration-700 hover:rounded-lg">
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                 className="w-10"
                 alt=""
               />
-              <div onClick={(e) => openProfile(e)}>
-                <h1 className="text-xl font-sans pl-6">musthfaaa</h1>
-                <p className="pl-6 pt-2">Musthafa CP</p>
+              <div >
+                <h1 className="text-xl font-sans pl-6">{userData.username}</h1>
+                <p className="pl-6 pt-2">{userData.name}</p>
               </div>
             </li>
             <li
@@ -131,7 +156,7 @@ function HomePage() {
                 >
                   <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z" />
                 </svg>
-                <span>Favorites</span>
+                <span>Posts</span>
               </a>
             </li>
             <li
@@ -174,7 +199,7 @@ function HomePage() {
               </a>
             </li>
             <li
-              onClick={(event) => handleClick(event)}
+              onClick={() => removeUserDataCookie()}
               className="hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
             >
               <a

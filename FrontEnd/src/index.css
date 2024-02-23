@@ -19,9 +19,9 @@
     animation: slidefromRight 2s ease-in-out;
 }
 
-.pfcard{
-  /* width: 1000px; */
-  /* height: 520px; */
+.settings{
+  height: 520px;
+  width: 1100px;
 }
 
 
@@ -95,6 +95,10 @@
 
   .posts{
     height: 520px;
+  }
+
+  .myposts{
+    height: 400px;
   }
 
   body{

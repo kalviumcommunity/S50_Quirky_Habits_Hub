@@ -6,6 +6,7 @@ import SignUpFrom from "./Components/forms/SignUpFrom";
 import LoginFrom from "./Components/forms/LoginFrom";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import "@fortawesome/fontawesome-free/css/all.min.css"
+import Profile from "./Components/SideBar/Profile";
 
 
 
@@ -16,7 +17,7 @@ function App() {
         <Route path="/HomePage" element={<HomePage />} />
         <Route path="/login" element={<LoginFrom />} />
         <Route path="/signup" element={<SignUpFrom />} />
-
+        <Route path="/profile" element={<Profile />} />
       </Routes>
   );
 }

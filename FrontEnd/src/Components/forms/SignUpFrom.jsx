@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Cookies from "js-cookie";
 
 function SignUpFrom() {
   const navigate = useNavigate();
@@ -18,24 +18,26 @@ function SignUpFrom() {
   const [sub, setSub] = useState(false);
 
   const onSubmit = async (data) => {
-    navigate('/HomePage');
     setSub(true);
+
     try {
-      const response = await axios.post("http://localhost:3000/users", {data}, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
+      console.log("data", data);
+      const response = await axios.post("http://localhost:3000/users",{
+        data}
+      );
+
       console.log("Server response:", response.data);
+      Cookies.set("userData", JSON.stringify(response.data));
+      navigate("/HomePage");
+
       setData(data);
     } catch (error) {
-      console.error("Error during POST request:", error.message);
+      console.error("Error during POST request:", error);
     }
   };
 
   return (
-      <>
+    <>
       <div className="w-screen bg-cyan-700 h-screen">
         <div className="grid justify-center">
           <h1 className="text-center text-3xl text-white font-medium p-10">
@@ -67,8 +69,8 @@ function SignUpFrom() {
                 placeholder="Enter your Name"
               />
               <p className="text-red-500 text-xs">
-                {errors.Name && (
-                  <span className="error-message">{errors.Name.message}</span>
+                {errors.name && (
+                  <span className="error-message">{errors.name.message}</span>
                 )}
               </p>
             </div>
@@ -113,9 +115,9 @@ function SignUpFrom() {
                 type="tel"
               />
               <p className="text-red-500 text-xs">
-                {errors.phonenumber && (
+                {errors.phone_number && (
                   <span className="error-message">
-                    {errors.phonenumber.message}
+                    {errors.phone_number.message}
                   </span>
                 )}
               </p>
