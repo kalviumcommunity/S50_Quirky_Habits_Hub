@@ -10,7 +10,6 @@ function Users() {
     axios
       .get("http://localhost:3000/users")
       .then((res) => {
-        console.log(res);
         setUserData(res.data);
       })
       .catch((err) => {
@@ -39,8 +38,8 @@ function Users() {
           />        </div>
 
         <h1 className="text-3xl font-bold mb-6">Users</h1>
-        {filteredUsers.map((user) => (
-          <div key={user.id} className="m-8 border border-cyan-700 p-10">
+        {filteredUsers.map((user, index) => (
+          <div key={index} className="m-8 border border-cyan-700 p-10">
             <h2 className="text-xl font-bold border-b border-cyan-500 pb-2">
               {user.username}
             </h2>
