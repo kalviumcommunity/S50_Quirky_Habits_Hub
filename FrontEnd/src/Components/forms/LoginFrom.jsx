@@ -39,6 +39,7 @@ function LoginFrom() {
 
     if (user) {
       console.log(user)
+      user.password = undefined;
       Cookies.set("userData", JSON.stringify(user));
       console.log("Login successful!");
       setSub(true);
@@ -61,7 +62,7 @@ function LoginFrom() {
           >
             {sub && !Object.keys(errors).length && (
               <h2 className="text-green-600 font-semibold text-lg border py-4 px-24">
-                Registration Successfull!
+                Login Successfull!
               </h2>
             )}
             <div className="form-group">
