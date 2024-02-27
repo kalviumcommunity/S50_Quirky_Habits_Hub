@@ -1,39 +1,51 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function LoginFrom() {
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  
   const [data, setData] = useState();
   const [sub, setSub] = useState(false);
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/users")
+      .then((res) => {
+        setUserData(res.data);
+      })
+      .catch((err) => {
+        console.log("Error while fetching the data of Users", err);
+      });
+  }, []);
 
   const onSubmit = async (data) => {
-    setSub(true);
     setData(data);
 
-    // try {
-    //   const response = await fetch("http://localhost:3000/posts", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
+    const user = userData.find(
+      (user) => user.email === data.email && user.password === data.password
+    );
 
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not ok");
-    //   }
-
-    //   const responseData = await response.json();
-    //   console.log("Server response:", responseData);
-    // } catch (error) {
-    //   console.error("Error during POST request:", error.message);
-    // }
+    if (user) {
+      console.log(user)
+      Cookies.set("userData", JSON.stringify(user));
+      console.log("Login successful!");
+      setSub(true);
+      navigate("/HomePage");
+    } else {
+      console.log("Invalid email or password");
+    }
   };
 
   return (
@@ -52,34 +64,11 @@ function LoginFrom() {
                 Registration Successfull!
               </h2>
             )}
-            {/* <div className="">
-            <input
-              className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
-              {...register("Name", {
-                required: "Name is required",
-                minLength: {
-                  value: 5,
-                  message: "Minimum length is 5 characters",
-                },
-                maxLength: {
-                  value: 20,
-                  message: "Maximum length is 20 characters",
-                },
-              })}
-              placeholder="Enter your Name"
-            />
-            <p className="text-red-500 text-xs">
-              {errors.Name && (
-                <span className="error-message">{errors.Name.message}</span>
-              )}
-            </p>
-          </div> */}
-
             <div className="form-group">
               <input
                 className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
-                {...register("username", {
-                  required: "username is required",
+                {...register("email", {
+                  required: "email is required",
                   minLength: {
                     value: 5,
                     message: "Minimum length is 5 characters",
@@ -89,60 +78,16 @@ function LoginFrom() {
                     message: "Maximum length is 20 characters",
                   },
                 })}
-                placeholder="Enter your username"
+                placeholder="Enter your email"
               />
               <p className="text-red-500 text-xs ">
-                {errors.username && (
+                {errors.email && (
                   <span className="error-message">
-                    {errors.username.message}
+                    {errors.email.message}
                   </span>
                 )}
               </p>
             </div>
-
-            {/* 
-          <div className="form-group">
-            <input
-              id="phonenumber"
-              className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
-              {...register("phonenumber", {
-                required: "Phone number is required",
-                pattern: {
-                  value: /^[0-9]{10}$/,
-                  message: "Please enter a valid 10-digit phone number.",
-                },
-              })}
-              placeholder="Enter your Phone Number"
-              type="tel"
-            />
-            <p className="text-red-500 text-xs">
-              {errors.phonenumber && (
-                <span className="error-message">
-                  {errors.phonenumber.message}
-                </span>
-              )}
-            </p>
-          </div>
-
-          <div className="form-group">
-            <input
-              className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-                  message: "Invalid email",
-                },
-              })}
-              placeholder="Enter your Email"
-            />
-            <p className="text-red-500 text-xs ">
-              {errors.email && (
-                <span className="error-message">{errors.email.message}</span>
-              )}
-            </p>
-          </div>
- */}
             <div className="form-group">
               <input
                 className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
