@@ -21,10 +21,8 @@ function SignUpFrom() {
     setSub(true);
 
     try {
-      console.log("data", data);
-      const response = await axios.post("http://localhost:3000/users",{
-        data}
-      );
+      console.log(data)
+      const response = await axios.post("http://localhost:3000/users",data);
 
       console.log("Server response:", response.data);
       Cookies.set("userData", JSON.stringify(response.data));

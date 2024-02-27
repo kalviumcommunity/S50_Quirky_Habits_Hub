@@ -88,7 +88,7 @@ function ProjectIdea() {
 
                 <Link
                   to="/HomePage"
-                  className="border bouncing fixed border-cyan-950 text-cyan-950 rounded-md px-12 hover:shadow-lg duration-300 py-3 text-center font-medium"
+                  className="bouncing border border-red-800 fixed  hover:text-cyan-950 text-cyan-950 rounded-md px-12 hover:shadow-lg duration-300 py-3 text-center font-medium"
                 >
                   Get Started
                 </Link>

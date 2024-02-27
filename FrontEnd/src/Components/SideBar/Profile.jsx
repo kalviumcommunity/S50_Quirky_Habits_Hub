@@ -4,14 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBTypography,
   MDBIcon,
 } from "mdb-react-ui-kit";
 
@@ -115,7 +107,7 @@ function Profile() {
 
                 <div className="w-full flex items-center justify-center">
                   <div className="w-40 h-40 rounded-full bg-black">
-                    
+                    <img src="" alt="" />
                   </div>
                 </div>
                 <div className="flex justify-center">

@@ -107,5 +107,10 @@
 
   .users{
     height: 520px;
-    width: 70%;
+    width: 1750px;
+  }
+
+  .ranklistPosts{
+    height: 520px;
+    width: 1750px;
   }
