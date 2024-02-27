@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const usermodel = require("../Schemas/Users");
+const Joi = require('joi');
 const app = express();
 
 app.use(express.json());
@@ -11,13 +12,9 @@ router.get("/", async (req, res) => {
     const data = await usermodel.find();
     res.json(data);
   } catch (error) {
-    console.error(
-      "An error occurred with the GET method while getting the user data:",
-      error
-    );
+    console.error("An error occurred with the GET method while getting the user data:", error);
     res.status(500).json({
-      error:
-        "Internal Server Error with the GET method while getting the user data",
+      error: "Internal Server Error with the GET method while getting the user data",
     });
   }
 });
@@ -36,32 +33,58 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     console.error("An error occurred while getting the user details:", error);
     res.status(500).json({
-      error:
-        "Internal Server Error with the GET method of getting the user details",
+      error: "Internal Server Error with the GET method of getting the user details",
     });
   }
 });
 
-// POST REQUEST
-router.post("/", async (req, res) => {
+// POST REQUEST with Joi Validation
+const createUserSchema = Joi.object({
+  username: Joi.string().min(3).max(30).required(),
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+  phone_number: Joi.string().required(),
+});
+
+function validateCreateUser(req, res, next) {
+  const { error } = createUserSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details });
+  }
+  next();
+}
+
+router.post("/", validateCreateUser, async (req, res) => {
   try {
-    console.log(req.body);
-    const data = await usermodel.create(req.body.data);
+    console.log(req.body)
+    const data = await usermodel.create(req.body);
     res.json(data);
   } catch (err) {
-    console.log(
-      "An error is caught with the POST method while posting the user data",
-      err
-    );
+    console.log("An error is caught with the POST method while posting the user data", err);
     res.status(500).json({
-      error:
-        "Internal Server Error with the POST method while posting the user data",
+      error: "Internal Server Error with the POST method while posting the user data",
     });
   }
 });
 
-//PUT
-router.put("/:id", async (req, res) => {
+// PUT REQUEST with Joi Validation
+const updateUserSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+  phone_number: Joi.string().required(),
+});
+
+function validateUpdateUser(req, res, next) {
+  const { error } = updateUserSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+  next();
+}
+
+router.put("/:id", validateUpdateUser, async (req, res) => {
   try {
     const id = req.params.id;
     const updatedData = await usermodel.findByIdAndUpdate(
@@ -90,9 +113,23 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// PATCH
+// PATCH REQUEST with Joi Validation
+const updatePartialUserSchema = Joi.object({
+  name: Joi.string(),
+  email: Joi.string().email(),
+  password: Joi.string(),
+  phone_number: Joi.string(),
+});
 
-router.patch("/:id", async (req, res) => {
+function validateUpdatePartialUser(req, res, next) {
+  const { error } = updatePartialUserSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+  next();
+}
+
+router.patch("/:id", validateUpdatePartialUser, async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -131,13 +168,12 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-//DELETE ACCORDING ID
-
+// DELETE ACCORDING ID
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   await usermodel.findByIdAndDelete(id);
   res.status(201).json({
-    Message: "Deleted Succussfully",
+    Message: "Deleted Successfully",
   });
 });
 

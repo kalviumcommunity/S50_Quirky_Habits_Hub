@@ -1,33 +1,40 @@
 const express = require("express");
 const router = express.Router();
 const postmodel = require("../Schemas/Posts");
-const app = express();
+const Joi = require('joi');
 
-app.use(express.json());
+// Joi schema for post validation
+const postSchema = Joi.object({
+  username: Joi.string().required(),
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+  link: Joi.string(),
+  reactions: Joi.number().default(0),
+});
 
-
+// Validation middleware
+function validatePost(req, res, next) {
+  const { error } = postSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+  next();
+}
 
 // GET
-
 router.get("/", async (req, res) => {
   try {
     const data = await postmodel.find();
     res.json(data);
   } catch (error) {
     console.error("An error occurred while getting the post details:", error);
-    res
-      .status(500)
-      .json({
-        error:
-          "Internal Server Error with the GET method of getting the post details",
-      });
+    res.status(500).json({
+      error: "Internal Server Error with the GET method of getting the post details",
+    });
   }
 });
 
-
-
-// GET ACCORDING THE ID
-
+// GET ACCORDING TO THE ID
 router.get("/:id", async (req, res) => {
   try {
     const postId = req.params.id;
@@ -35,40 +42,27 @@ router.get("/:id", async (req, res) => {
     res.json(post);
   } catch (error) {
     console.error("An error occurred while getting the post details:", error);
-    res
-      .status(500)
-      .json({
-        error:
-          "Internal Server Error with the GET method of getting the post details",
-      });
+    res.status(500).json({
+      error: "Internal Server Error with the GET method of getting the post details",
+    });
   }
 });
 
-
-
 // POST
-
-router.post("/", async (req, res) => {
+router.post("/", validatePost, async (req, res) => {
   try {
-    console.log(req.body);
     const data = await postmodel.create(req.body);
     res.json(data);
   } catch (err) {
     console.log("An error is caught while posting the post details", err);
-    res
-      .status(500)
-      .json({
-        error:
-          "Internal Server Error with the POST method of submitting the post details ",
-      });
+    res.status(500).json({
+      error: "Internal Server Error with the POST method of submitting the post details",
+    });
   }
 });
 
-
-
 // PUT
-
-router.put("/:id", async (req, res) => {
+router.put("/:id", validatePost, async (req, res) => {
   try {
     const id = req.params.id;
     const updatedData = await postmodel.findByIdAndUpdate(
@@ -90,19 +84,14 @@ router.put("/:id", async (req, res) => {
     res.json(updatedData);
   } catch (error) {
     console.error("An error occurred while updating the post:", error);
-    res
-      .status(500)
-      .json({
-        error: "Internal Server Error with the PUT method while updating the post",
-      });
+    res.status(500).json({
+      error: "Internal Server Error with the PUT method while updating the post",
+    });
   }
 });
 
-
-
 // PATCH
-
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", validatePost, async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -132,33 +121,25 @@ router.patch("/:id", async (req, res) => {
     res.json(updatedData);
   } catch (error) {
     console.error("An error occurred while updating the post using PATCH:", error);
-    res
-      .status(500)
-      .json({
-        error: "Internal Server Error with the PATCH method of updating the post",
-      });
+    res.status(500).json({
+      error: "Internal Server Error with the PATCH method of updating the post",
+    });
   }
 });
 
-
-
-//DELETE
-
+// DELETE
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     await postmodel.findByIdAndDelete(id);
     res.status(201).json({
-      Message: "Deleted Succussfully",
+      Message: "Deleted Successfully",
     });
   } catch (err) {
-    console.log("An error occured in the deleting process of post details");
-    res
-      .status(500)
-      .json({
-        error:
-          "Intenal Server error with the deleting process off the post details",
-      });
+    console.log("An error occurred in the deleting process of post details");
+    res.status(500).json({
+      error: "Internal Server error with the deleting process of the post details",
+    });
   }
 });
 
