@@ -23,8 +23,7 @@ function SignUpFrom() {
     try {
       console.log(data)
       const response = await axios.post("http://localhost:3000/users",data);
-
-      console.log("Server response:", response.data);
+      response.data.password = undefined;
       Cookies.set("userData", JSON.stringify(response.data));
       navigate("/HomePage");
 
