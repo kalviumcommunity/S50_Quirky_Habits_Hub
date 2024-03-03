@@ -3,8 +3,14 @@ const router = express.Router();
 const usermodel = require("../Schemas/Users");
 const Joi = require('joi');
 const app = express();
-
+const jwt = require('jsonwebtoken');
 app.use(express.json());
+
+
+const generateToken = ({username, name, password, phone_number, email}) => {
+  return jwt.sign( {username, name, phone_number, email, password} , process.env.JWT_SECRET, { expiresIn: "1h", });
+};
+
 
 // GET REQUEST
 router.get("/", async (req, res) => {
@@ -18,6 +24,7 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
 
 // GET REQUEST ACCORDING ID
 router.get("/:id", async (req, res) => {
@@ -38,6 +45,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
+
+
 // POST REQUEST with Joi Validation
 const createUserSchema = Joi.object({
   username: Joi.string().min(3).max(30).required(),
@@ -48,6 +58,7 @@ const createUserSchema = Joi.object({
 });
 
 function validateCreateUser(req, res, next) {
+  console.log(req.body)
   const { error } = createUserSchema.validate(req.body);
   if (error) {
     return res.status(400).json({ error: error.details });
@@ -55,11 +66,16 @@ function validateCreateUser(req, res, next) {
   next();
 }
 
+
 router.post("/", validateCreateUser, async (req, res) => {
   try {
-    console.log(req.body)
     const data = await usermodel.create(req.body);
-    res.json(data);
+    const token = generateToken(data);
+
+    console.log("Token",token)
+    console.log("Data",data)
+
+    res.status(201).json({ user: data, token: token });
   } catch (err) {
     console.log("An error is caught with the POST method while posting the user data", err);
     res.status(500).json({
@@ -67,6 +83,8 @@ router.post("/", validateCreateUser, async (req, res) => {
     });
   }
 });
+
+
 
 // PUT REQUEST with Joi Validation
 const updateUserSchema = Joi.object({
@@ -176,5 +194,6 @@ router.delete("/:id", async (req, res) => {
     Message: "Deleted Successfully",
   });
 });
+
 
 module.exports = router;

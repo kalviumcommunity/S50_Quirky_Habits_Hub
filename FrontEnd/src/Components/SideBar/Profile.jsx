@@ -3,9 +3,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import {
-  MDBIcon,
-} from "mdb-react-ui-kit";
+import { MDBIcon } from "mdb-react-ui-kit";
 
 function Profile() {
   const [userData, setUserData] = useState("");
@@ -17,6 +15,10 @@ function Profile() {
     email: "",
   });
   const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate("/HomePage");
+  };
 
   const DeleteAcc = () => {
     console.log("Deleting account...");
@@ -51,7 +53,6 @@ function Profile() {
     // Check if any data is updated
     if (
       updatedUserData.name !== userData.name ||
-      updatedUserData.username !== userData.username ||
       updatedUserData.phone_number !== userData.phone_number ||
       updatedUserData.email !== userData.email
     ) {
@@ -70,7 +71,6 @@ function Profile() {
           console.log(data);
 
           setUpdatedUserData({
-            username: "",
             name: "",
             phone_number: "",
             email: "",
@@ -199,19 +199,31 @@ function Profile() {
                       Personal login information of your account
                     </span>
                     <div className="mt-5">
-                      <button
-                        onClick={() => DeleteAcc()}
-                        className="bg-red-600 px-3 py-1 text-white"
-                      >
-                        Delete Account
-                      </button>
-                      {isSubmit && (
+                      {!isSubmit && (
+                        <button
+                          onClick={() => DeleteAcc()}
+                          className="bg-red-600 px-3 py-1 text-white"
+                        >
+                          Delete Account
+                        </button>
+                      )}
+
+                      {isSubmit ? (
                         <div className="inline pl-5 text-end pt-3">
                           <button
                             onClick={handleSubmission}
-                            className="bg-cyan-800 px-3 py-1 text-white"
+                            className="bg-cyan-800  px-10 py-1 text-white"
                           >
                             Submit
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="inline pl-5 text-end pt-3">
+                          <button
+                            onClick={handleGoBack}
+                            className="bg-cyan-800 px-3 py-1 text-white"
+                          >
+                            Go Back
                           </button>
                         </div>
                       )}

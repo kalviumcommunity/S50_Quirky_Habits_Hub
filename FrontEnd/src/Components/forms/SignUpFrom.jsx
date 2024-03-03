@@ -21,10 +21,15 @@ function SignUpFrom() {
     setSub(true);
 
     try {
-      console.log(data)
-      const response = await axios.post("http://localhost:3000/users",data);
-      response.data.password = undefined;
-      Cookies.set("userData", JSON.stringify(response.data));
+      const response = await axios.post("http://localhost:3000/users",  data );
+
+      const { user, token } = response.data;
+      console.log("Token: ", token);
+      console.log("User: ", JSON.stringify(user));
+
+      Cookies.set("userData", JSON.stringify(user));
+      Cookies.set("Token", token);
+      
       navigate("/HomePage");
 
       setData(data);
@@ -72,7 +77,7 @@ function SignUpFrom() {
               </p>
             </div>
 
-            <div className="form-group">
+            <div className="">
               <input
                 className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
                 {...register("username", {
@@ -97,7 +102,7 @@ function SignUpFrom() {
               </p>
             </div>
 
-            <div className="form-group">
+            <div className="">
               <input
                 id="phonenumber"
                 className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
@@ -120,7 +125,7 @@ function SignUpFrom() {
               </p>
             </div>
 
-            <div className="form-group">
+            <div className="">
               <input
                 className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
                 {...register("email", {
@@ -139,7 +144,7 @@ function SignUpFrom() {
               </p>
             </div>
 
-            <div className="form-group">
+            <div className="">
               <input
                 className="duration-500 hover:border hover:border-cyan-700 hover:shadow-2xl border mt-6 w-96 py-2 pl-4 rounded-sm bg-white text-cyan-900"
                 {...register("password", {

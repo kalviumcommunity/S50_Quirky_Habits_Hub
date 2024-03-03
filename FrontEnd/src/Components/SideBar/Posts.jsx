@@ -49,9 +49,6 @@ function Posts() {
                 <h2 className="text-xl font-semibold">
                   Likes :- 60
                 </h2>
-                <button className="bg-cyan-700 mt-10 mb-7 font-mono hover:shadow-xl duration-500 text-white rounded py-3 px-9">
-                  Add to Fav
-                </button>
               </div>
             </div>
             <h3 className="text-cyan-950 text-2xl font-semibold mb-3">
