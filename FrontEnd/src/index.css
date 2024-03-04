@@ -3,6 +3,68 @@
 @tailwind utilities;
 
 
+.settings {
+  height: 520px;
+  width: 1100px;
+}
+
+input {
+  outline: none;
+}
+
+.sidebar {
+  width: 400px;
+  height: 87vh;
+}
+
+.posts {
+  height: 520px;
+}
+
+.myposts {
+  height: 400px;
+}
+
+body {
+  overflow: hidden;
+}
+
+.trending {
+  height: 550px;
+  width: 1100px;
+}
+.users {
+  height: 520px;
+  width: 1750px;
+}
+
+.ranklistPosts {
+  height: 520px;
+}
+
+.picturemoving1,
+.picturemoving7 {
+  animation: slidefromRIght 2s ease-in-out;
+}
+
+.picturemoving2,
+.picturemoving6 {
+  animation: slidefromRight 2s ease-in-out;
+}
+
+.picturemoving3 {
+  animation: fromtheBottom 2s ease-in-out;
+}
+
+.picturemoving5 {
+  animation: fromTheTop 2s ease-in-out;
+}
+
+
+.bouncing {
+  animation: slidefromRight 2s ease-in-out;
+}
+
 @keyframes bounce {
   0%,
   100% {
@@ -15,102 +77,38 @@
   }
 }
 
-.bouncing {
-    animation: slidefromRight 2s ease-in-out;
-}
-
-.settings{
-  height: 520px;
-  width: 1100px;
-}
-
-
-.picturemoving1,.picturemoving7{
-    animation: slidefromRIght 2s ease-in-out;
-}
-
-.picturemoving2,.picturemoving6{
-    animation: slidefromRight 2s ease-in-out;
-}
-
-.picturemoving3{
-    animation: fromtheBottom 2s ease-in-out;
-}
-
-.picturemoving5{
-    animation: fromTheTop 2s ease-in-out;
-}
-
-
 @keyframes fromTheTop {
-    from {
-      transform: translateY(-100%);
-    }
-    to {
-      transform: translateY(0%);
-    }
+  from {
+    transform: translateY(-100%);
   }
+  to {
+    transform: translateY(0%);
+  }
+}
 
-  
 @keyframes fromtheBottom {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+  from {
+    transform: translateY(100%);
   }
-
-
-
+  to {
+    transform: translateY(0);
+  }
+}
 
 @keyframes slidefromRIght {
-    from {
-      transform: translateX(100%);
-    }
-    to {
-      transform: translateX(0);
-    }
+  from {
+    transform: translateX(100%);
   }
-
+  to {
+    transform: translateX(0);
+  }
+}
 
 @keyframes slidefromRight {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
+  from {
+    transform: translateX(-100%);
   }
-
-
-  input{
-    outline: none;
+  to {
+    transform: translateX(0);
   }
-
-  .sidebar{
-    width: 400px;
-    height: 87vh;
-  }
-
-  .posts{
-    height: 520px;
-  }
-
-  .myposts{
-    height: 400px;
-  }
-
-  body{
-    overflow: hidden;
-  }
-
-  .users{
-    height: 520px;
-    width: 1750px;
-  }
-
-  .ranklistPosts{
-    height: 520px;
-    width: 1750px;
-  }
+}

@@ -1,12 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useState , useEffect } from "react";
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function LoginFrom() {
-
   const navigate = useNavigate();
 
   const {
@@ -14,7 +13,7 @@ function LoginFrom() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   const [data, setData] = useState();
   const [sub, setSub] = useState(false);
   const [userData, setUserData] = useState([]);
@@ -38,10 +37,8 @@ function LoginFrom() {
     );
 
     if (user) {
-      console.log(user)
-      user.password = undefined;
+      console.log(user);
       Cookies.set("userData", JSON.stringify(user));
-      console.log("Login successful!");
       setSub(true);
       navigate("/HomePage");
     } else {
@@ -83,9 +80,7 @@ function LoginFrom() {
               />
               <p className="text-red-500 text-xs ">
                 {errors.email && (
-                  <span className="error-message">
-                    {errors.email.message}
-                  </span>
+                  <span className="error-message">{errors.email.message}</span>
                 )}
               </p>
             </div>

@@ -5,27 +5,26 @@ import datajson from "../data.json";
 function Dashbord() {
   const [userData, setUserData] = useState([]);
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const res = await axios.get("http://localhost:3000/posts");
-//         console.log(res);
-//         setUserData(res.data);
-//       } catch (error) {
-//         console.error("Error fetching data", error);
-//         console.log(
-//           "Error is there while fetching the data from the data base"
-//         );
-//       }
-//     };
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         const res = await axios.get("https://quirky-habits-hub.onrender.com/posts");
+  //         console.log(res);
+  //         setUserData(res.data);
+  //       } catch (error) {
+  //         console.error("Error fetching data", error);
+  //         console.log(
+  //           "Error is there while fetching the data from the data base"
+  //         );
+  //       }
+  //     };
 
-//     fetchData();
-//   }, []);
-
+  //     fetchData();
+  //   }, []);
 
   useEffect(() => {
     setUserData(datajson);
-  })
+  });
 
   return (
     <>
@@ -48,9 +47,6 @@ function Dashbord() {
                   <h2 className="text-xl font-semibold">
                     Likes :- {user.reactions}
                   </h2>
-                  <button className="bg-cyan-700 mt-10 mb-7 font-mono hover:shadow-xl duration-500 text-white rounded py-3 px-9">
-                    Add to Fav
-                  </button>
                 </div>
               </div>
               <h3 className="text-cyan-950 text-2xl font-semibold mb-3">
