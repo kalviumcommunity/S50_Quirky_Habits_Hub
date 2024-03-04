@@ -46,11 +46,11 @@ function Trending() {
 
       if (reactions >= 1000) {
         categorizedData.eightToTen.push(post);
-      } else if (reactions < 1000 && reactions >= 800) {
+      } else if (reactions < 1000 && reactions >= 700) {
         categorizedData.sixToEight.push(post);
-      } else if (reactions < 800 && reactions >= 600) {
+      } else if (reactions < 700 && reactions >= 400) {
         categorizedData.fourToSix.push(post);
-      } else if (reactions < 600) {
+      } else if (reactions < 400) {
         categorizedData.lessThanFour.push(post);
       }
     });
@@ -74,8 +74,7 @@ function Trending() {
   };
 
   const renderPost = (post) => (
-    <div key={post.id} className="">
-    <div className="m-8 border border-cyan-700 p-10 ">
+    <div key={post.id} className="m-8 border border-cyan-700 p-10 ">
       <h1 className="font-bold text-2xl border border-cyan-500 py-2 pl-5">
         {post.username}
       </h1>
@@ -99,7 +98,6 @@ function Trending() {
         {post.content}
       </p>
     </div>
-  </div>
   );
 
   return (
@@ -117,11 +115,13 @@ function Trending() {
                 value={selectedRating}
                 onChange={handleRatingChange}
               >
-                {["All", "8 - 10", "6 - 8", "4 - 6", "Less than 4"].map((rating) => (
-                  <option key={rating} value={rating}>
-                    {rating}
-                  </option>
-                ))}
+                {["All", "8 - 10", "6 - 8", "4 - 6", "Less than 4"].map(
+                  (rating) => (
+                    <option key={rating} value={rating}>
+                      {rating}
+                    </option>
+                  )
+                )}
               </select>
             </div>
           </div>
