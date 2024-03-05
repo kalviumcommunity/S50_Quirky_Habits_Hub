@@ -54,6 +54,7 @@ function Trending() {
         categorizedData.lessThanFour.push(post);
       }
     });
+
     return categorizedData;
   };
 
@@ -112,7 +113,6 @@ function Trending() {
             <div className="dropdown">
               <select
                 id="rating"
-                className="w-40 text-xl border rounded-sm flex justify-center px-4 py-2 focus:outline-none focus:ring focus:border-cyan-700"
                 value={selectedRating}
                 onChange={handleRatingChange}
               >
