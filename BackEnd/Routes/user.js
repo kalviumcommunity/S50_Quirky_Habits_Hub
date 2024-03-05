@@ -7,8 +7,10 @@ const jwt = require('jsonwebtoken');
 app.use(express.json());
 
 
-const generateToken = ({username, name, password, phone_number, email}) => {
-  return jwt.sign( {username, name, phone_number, email, password} , process.env.JWT_SECRET, { expiresIn: "1h", });
+// Destructure
+
+const generateToken = ({ username, name, password, phone_number, email }) => {
+  return jwt.sign( { username, name, phone_number, email, password } , process.env.JWT_SECRET, { expiresIn: "1h", });
 };
 
 
