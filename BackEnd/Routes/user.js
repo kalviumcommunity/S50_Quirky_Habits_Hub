@@ -135,9 +135,9 @@ router.put("/:id", validateUpdateUser, async (req, res) => {
 
 // PATCH REQUEST with Joi Validation
 const updatePartialUserSchema = Joi.object({
+  username: Joi.string(),
   name: Joi.string(),
   email: Joi.string().email(),
-  password: Joi.string(),
   phone_number: Joi.string(),
 });
 
@@ -152,10 +152,14 @@ function validateUpdatePartialUser(req, res, next) {
 router.patch("/:id", validateUpdatePartialUser, async (req, res) => {
   try {
     const id = req.params.id;
+    console.log(id)
 
     const updateFields = {};
     if (req.body.name) {
       updateFields.name = req.body.name;
+    }
+    if (req.body.username) {
+      updateFields.username = req.body.username;
     }
     if (req.body.email) {
       updateFields.email = req.body.email;
@@ -167,13 +171,8 @@ router.patch("/:id", validateUpdatePartialUser, async (req, res) => {
       updateFields.phone_number = req.body.phone_number;
     }
 
-    const updatedData = await usermodel.findByIdAndUpdate(
-      id,
-      {
-        $set: updateFields,
-      },
-      { new: true }
-    );
+    const updatedData = await usermodel.findByIdAndUpdate(id, updateFields,{new: true});
+    console.log("üpdated",updatedData)
 
     if (!updatedData) {
       return res.status(404).json({ error: "User not found" });

@@ -21,7 +21,7 @@ function SignUpFrom() {
     setSub(true);
 
     try {
-      const response = await axios.post("http://localhost:3000/users",  data );
+      const response = await axios.post("https://quirky-habits-hub.onrender.com/users", data);
 
       const { user, token } = response.data;
       console.log("Token: ", token);
@@ -166,13 +166,22 @@ function SignUpFrom() {
                 )}
               </p>
             </div>
-
-            <button
-              type="submit"
-              className="bg-cyan-700 duration-500 mt-10 px-10 py-2 hover:bg-cyan-900 text-white p-10-15 border-none border-radius-4px cursor-pointer text-base"
-            >
-              Submit
-            </button>
+            <div className="flex gap-5">
+              <button
+                onClick={() => {
+                  navigate("/Homepage");
+                }}
+                className="bg-cyan-700 duration-500 mt-10 px-10 py-2 hover:bg-cyan-900 text-white p-10-15 border-none border-radius-4px cursor-pointer text-base"
+              >
+                GO BACK
+              </button>
+              <button
+                type="submit"
+                className="bg-cyan-700 duration-500 mt-10 px-10 py-2 hover:bg-cyan-900 text-white p-10-15 border-none border-radius-4px cursor-pointer text-base"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </div>

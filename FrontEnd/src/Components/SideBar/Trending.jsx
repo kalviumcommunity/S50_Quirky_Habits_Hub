@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/posts";
+const API_URL = "https://quirky-habits-hub.onrender.com/posts";
 
 function Trending() {
   const [response, setResponse] = useState([]);
@@ -11,23 +11,36 @@ function Trending() {
   const [lessThanFour, setLessThanFour] = useState([]);
   const [selectedRating, setSelectedRating] = useState("All");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(API_URL);
-        const categorizedData = categorizePosts(response.data);
-        setEightToTen(categorizedData.eightToTen);
-        setSixToEight(categorizedData.sixToEight);
-        setFourToSix(categorizedData.fourToSix);
-        setLessThanFour(categorizedData.lessThanFour);
-        setResponse(response.data);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      const categorizedData = categorizePosts(response.data);
+      setEightToTen(categorizedData.eightToTen);
+      setSixToEight(categorizedData.sixToEight);
+      setFourToSix(categorizedData.fourToSix);
+      setLessThanFour(categorizedData.lessThanFour);
+      setResponse(response.data);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
+
+  const LikeIncrease = (id) => {
+    console.log(id);
+    axios
+      .patch(`https://quirky-habits-hub.onrender.com/posts/${id}`)
+      .then((res) => {
+        console.log("Response:", res.data);
+        fetchData();
+      })
+      .catch(function (error) {
+        console.error("Error:", error);
+      });
+  };
 
   const handleRatingChange = (event) => {
     setSelectedRating(event.target.value);
@@ -60,13 +73,13 @@ function Trending() {
 
   const renderSelectedData = () => {
     switch (selectedRating) {
-      case "8 - 10":
+      case "Greater than 1000":
         return eightToTen.map((post) => renderPost(post));
-      case "6 - 8":
+      case "Between 700 to 1000":
         return sixToEight.map((post) => renderPost(post));
-      case "4 - 6":
+      case "Between 400 to 700":
         return fourToSix.map((post) => renderPost(post));
-      case "Less than 4":
+      case "Less than 400":
         return lessThanFour.map((post) => renderPost(post));
       default:
         return response.map((post) => renderPost(post));
@@ -74,6 +87,29 @@ function Trending() {
   };
 
   const renderPost = (post) => (
+    <div key={post.id} className="m-8 border border-cyan-700 p-10 ">
+      <h1 className="font-bold text-2xl border border-cyan-500 py-2 pl-5">
+        {post.username}
+      </h1>
+      <div className="flex items-center gap-10">
+        <div
+          style={{ backgroundImage: `url(${post.link})` }}
+          className="my-3 post w-3/4 "
+        >
+          <img className="h-96" alt="" />
+        </div>
+
+        <div className="text-center"></div>
+
+        <div className="text-center">
+          <button
+            onClick={() => LikeIncrease(post._id)}
+            className=" bg-cyan-700 mb-7 font-mono hover:shadow-xl duration-500 text-white rounded py-3 px-9"
+          >
+            Like
+          </button>
+          <h2 className="text-xl font-semibold">Likes :- {post.reactions}</h2>
+
     <div key={post.id} className="">
       <div className="m-8 border border-cyan-700 p-10 ">
         <h1 className="font-bold text-2xl border border-cyan-500 py-2 pl-5">
@@ -116,13 +152,17 @@ function Trending() {
                 value={selectedRating}
                 onChange={handleRatingChange}
               >
-                {["All", "8 - 10", "6 - 8", "4 - 6", "Less than 4"].map(
-                  (rating) => (
-                    <option key={rating} value={rating}>
-                      {rating}
-                    </option>
-                  )
-                )}
+                {[
+                  "All",
+                  "Greater than 1000",
+                  "Between 700 to 1000",
+                  "Between 400 to 700",
+                  "Less than 400",
+                ].map((rating) => (
+                  <option key={rating} value={rating}>
+                    {rating}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

@@ -12,11 +12,6 @@ input {
   outline: none;
 }
 
-.sidebar {
-  width: 400px;
-  height: 87vh;
-}
-
 .posts {
   height: 520px;
 }
@@ -27,6 +22,12 @@ input {
 
 body {
   overflow: hidden;
+}
+
+.post{
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .trending {
