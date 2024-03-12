@@ -51,12 +51,41 @@ router.get("/:id", async (req, res) => {
 // POST
 router.post("/", validatePost, async (req, res) => {
   try {
+    console.log(req.body)
     const data = await postmodel.create(req.body);
     res.json(data);
   } catch (err) {
     console.log("An error is caught while posting the post details", err);
     res.status(500).json({
       error: "Internal Server Error with the POST method of submitting the post details",
+    });
+  }
+});
+
+router.get('/:username', (req, res) => {
+  const username = req.params.username;
+  const userPosts = postmodel.filter(post => post.username === username);
+  res.json(userPosts);
+});
+
+
+router.patch("/:id", async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    const post = await postmodel.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+    post.reactions += 1;
+    const updatedPost = await post.save();
+
+    res.json(updatedPost);
+  } catch (err) {
+    console.log("An error occurred while updating the post details", err);
+    res.status(500).json({
+      error: "Internal Server Error with the PATCH method of updating the post details",
     });
   }
 });

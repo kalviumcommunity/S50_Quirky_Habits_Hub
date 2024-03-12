@@ -10,6 +10,7 @@ function Profile() {
   const [isInputDisabled, setIsInputDisabled] = useState(true);
   const [isSubmit, setSubmit] = useState(false);
   const [updatedUserData, setUpdatedUserData] = useState({
+    username: "",
     name: "",
     phone_number: "",
     email: "",
@@ -24,7 +25,7 @@ function Profile() {
     console.log("Deleting account...");
 
     axios
-      .delete(`http://localhost:3000/users/${userData._id}`)
+      .delete(`https://quirky-habits-hub.onrender.com/users/${userData._id}`)
       .then((response) => {
         console.log("Account deleted successfully:", response.data);
         Cookies.remove("userData");
@@ -36,7 +37,6 @@ function Profile() {
   };
 
   useEffect(() => {
-    // Retrieve data from cookies
     const storedUserData = Cookies.get("userData");
     if (storedUserData) {
       const parsedUserData = JSON.parse(storedUserData);
@@ -47,42 +47,39 @@ function Profile() {
   const Edit = (e) => {
     setIsInputDisabled(!isInputDisabled);
     setSubmit(!isSubmit);
+    setUpdatedUserData(userData);
   };
 
-  const handleSubmission = () => {
+  const handleSubmission = async () => {
     // Check if any data is updated
-    if (
-      updatedUserData.name !== userData.name ||
-      updatedUserData.phone_number !== userData.phone_number ||
-      updatedUserData.email !== userData.email
-    ) {
-      // Make a patch request to update the user data
-      fetch(`http://localhost:3000/users/${userData._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedUserData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setUserData(data);
-          Cookies.set("userData", JSON.stringify(data));
-          console.log(data);
+    // Make a patch request to update the user data
+    console.log(userData, updatedUserData);
+    const { email, username, name, phone_number } = updatedUserData;
 
-          setUpdatedUserData({
-            name: "",
-            phone_number: "",
-            email: "",
-          });
+    try {
+      const response = await axios.patch(
+        `https://quirky-habits-hub.onrender.com/users/${userData._id}`,
+        { email, username, name, phone_number }
+      );
 
-          setIsInputDisabled(true);
-          setSubmit(!isSubmit);
-          alert("Updation Completed Succussfully");
-        })
-        .catch((error) => {
-          console.error("Error updating user data:", error);
-        });
+      const data = response.data;
+
+      setUserData(data);
+      Cookies.set("userData", JSON.stringify(data));
+      console.log("data", data);
+
+      // setUpdatedUserData({
+      //   username:"",
+      //   name: "",
+      //   phone_number: "",
+      //   email: "",
+      // });
+
+      setIsInputDisabled(true);
+      setSubmit(!isSubmit);
+      alert("Updation Completed Successfully");
+    } catch (error) {
+      console.error("Error updating user data:", error);
     }
   };
 
@@ -97,17 +94,13 @@ function Profile() {
                   <span className="text-4xl m-2 font-semibold block">
                     {userData.username}
                   </span>
-                  <MDBIcon
-                    onClick={Edit}
-                    far
-                    icon="edit"
-                    className="cursor-pointer"
-                  />
                 </div>
-
                 <div className="w-full flex items-center justify-center">
-                  <div className="w-40 h-40 rounded-full bg-black">
-                    <img src="" alt="" />
+                  <div className="w-40 h-40 mt-[-70px] rounded-full ">
+                    <img
+                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                      alt=""
+                    />
                   </div>
                 </div>
                 <div className="flex justify-center">
@@ -125,6 +118,15 @@ function Profile() {
 
               <div className="w-full md:w-3/5 p-8 bg-white lg:ml-4 shadow-md">
                 <div className="rounded  shadow p-6">
+                  <div className="flex justify-end">
+                  <MDBIcon
+                    onClick={Edit}
+                    far
+                    icon="edit"
+                    className="cursor-pointer"
+                  />
+                  </div>
+
                   <div className="pb-6">
                     <label className="font-semibold text-gray-700 block pb-1">
                       Name
@@ -142,7 +144,7 @@ function Profile() {
                         }
                         onChange={(e) =>
                           setUpdatedUserData({
-                            ...updatedUserData,
+                            ...userData,
                             name: e.target.value,
                           })
                         }
@@ -166,7 +168,7 @@ function Profile() {
                         }
                         onChange={(e) =>
                           setUpdatedUserData({
-                            ...updatedUserData,
+                            ...userData,
                             phone_number: e.target.value,
                           })
                         }
@@ -189,7 +191,7 @@ function Profile() {
                       }
                       onChange={(e) =>
                         setUpdatedUserData({
-                          ...updatedUserData,
+                          ...userData,
                           email: e.target.value,
                         })
                       }

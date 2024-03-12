@@ -20,7 +20,7 @@ function LoginFrom() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users")
+      .get("https://quirky-habits-hub.onrender.com/users")
       .then((res) => {
         setUserData(res.data);
       })
@@ -37,7 +37,6 @@ function LoginFrom() {
     );
 
     if (user) {
-      console.log(user);
       Cookies.set("userData", JSON.stringify(user));
       setSub(true);
       navigate("/HomePage");
@@ -72,8 +71,8 @@ function LoginFrom() {
                     message: "Minimum length is 5 characters",
                   },
                   maxLength: {
-                    value: 20,
-                    message: "Maximum length is 20 characters",
+                    value: 25,
+                    message: "Maximum length is 25 characters",
                   },
                 })}
                 placeholder="Enter your email"
@@ -109,13 +108,22 @@ function LoginFrom() {
                 )}
               </p>
             </div>
-
-            <button
-              type="submit"
-              className="bg-cyan-700 duration-500 mt-10 px-10 py-2 hover:bg-cyan-900 text-white p-10-15 border-none border-radius-4px cursor-pointer text-base"
-            >
-              Submit
-            </button>
+            <div className="flex gap-5">
+              <button
+                onClick={() => {
+                  navigate("/Homepage");
+                }}
+                className="bg-cyan-700 duration-500 mt-10 px-10 py-2 hover:bg-cyan-900 text-white p-10-15 border-none border-radius-4px cursor-pointer text-base"
+              >
+                GO BACK
+              </button>
+              <button
+                type="submit"
+                className="bg-cyan-700 duration-500 mt-10 px-10 py-2 hover:bg-cyan-900 text-white p-10-15 border-none border-radius-4px cursor-pointer text-base"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </div>

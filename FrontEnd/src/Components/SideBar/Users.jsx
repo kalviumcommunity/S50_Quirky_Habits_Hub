@@ -8,7 +8,7 @@ function Users() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/users")
+      .get("https://quirky-habits-hub.onrender.com/users")
       .then((res) => {
         setUserData(res.data);
       })

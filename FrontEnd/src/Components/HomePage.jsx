@@ -18,26 +18,31 @@ function HomePage() {
   const [activeComponent, setActiveComponent] = useState("home");
   const [userData, setUserData] = useState("");
   const [logout, setLogout] = useState(false);
-
-
-  const handleClick = (event) => {
-    const spanContent = event.currentTarget.querySelector("span").textContent;
-    setActiveComponent(spanContent.toLowerCase());
-  };
+  const [signup, setSignup] = useState(false);
 
   useEffect(() => {
     const storedUserData = Cookies.get("userData");
-    console.log(storedUserData);
     if (storedUserData) {
+      setSignup(!signup);
       const parsedUserData = JSON.parse(storedUserData);
       setUserData(parsedUserData);
     }
   }, []);
 
+
+  const handleClick = (event) => {
+    if (!userData) {
+      alert("Create An Account First");
+      // navigate("/login");
+    } else {
+      const spanContent = event.currentTarget.querySelector("span").textContent;
+      setActiveComponent(spanContent.toLowerCase());
+    }
+  };
+
   const navigate = useNavigate();
 
   const openProfile = (e) => {
-    console.log("clicked");
     navigate("/profile");
   };
 
@@ -59,74 +64,79 @@ function HomePage() {
   };
 
   const Cancel = () => {
-    setLogout(false)
-  }
+    setLogout(false);
+  };
 
   const Logout = () => {
     Cookies.remove("userData");
     alert("Logged Out Succussfully!");
     window.location.reload();
-  }
-
-  const SetLogOut = () => {
-    setLogout(true)
   };
 
+  const SetLogOut = () => {
+    setLogout(true);
+  };
 
-    if(!logout){
-      return(
-        <>
-          <nav className="p-4 flex items-center justify-between border-b borde  bg-cyan-800">
-            <div className="container flex justify-between h-16 ml-16">
-              <img className="cursor-pointer" src={WLOGO} alt="" />
-            </div>
-            <div className="mr-10 flex gap-6">
+  if (!logout) {
+    return (
+      <>
+        <nav className="p-4 flex items-center justify-between border-b borde  bg-cyan-800">
+          <div className="container flex justify-between h-16 ml-16">
+            <img className="cursor-pointer" src={WLOGO} alt="" />
+          </div>
+          <div className="mr-10 flex gap-6">
             {userData ? (
-                // User is logged in, render profile information
-                <>
-                  <button
-                    className="border hover:shadow-lg font-mono text-center py-2 rounded w-28 bg-white"
-                    onClick={() => SetLogOut()}
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    className="border hover:shadow-lg font-mono text-center py-2 rounded w-28 bg-white"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    to="/signup"
-                    className="border hover:shadow-lg font-mono text-center py-2 rounded w-28 bg-white"
-                  >
-                    Sign up
-                  </Link>
-                </>
-              )}
-            </div>
-          </nav>
+              <>
+                <button
+                  className="border hover:shadow-lg font-mono text-center py-2 rounded w-28 bg-white"
+                  onClick={() => SetLogOut()}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="border hover:shadow-lg font-mono text-center py-2 rounded w-28 bg-white"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="border hover:shadow-lg font-mono text-center py-2 rounded w-28 bg-white"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
+          </div>
+        </nav>
 
-          <div className="flex">
-          <aside className="sidebar border-r border-cyan-500 ">
-            <ul className="pt-3 pb-4 space-y-1 text-cyan-950 text-sm ">
-              <li onClick={(e) => openProfile(e)} className="flex pl-5 items-center py-3 m-2 cursor-pointer hover:shadow-2xl hover:border hover:border-cyan-500 duration-700 hover:rounded-lg">
-                <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                  className="w-10"
-                  alt=""
-                />
-                <div >
-                  <h1 className="text-xl font-sans pl-6">{userData.username}</h1>
-                  <p className="pl-6 pt-2">{userData.name}</p>
-                </div>
-              </li>
+        <div className="flex">
+          <aside className="sidebar ">
+            <ul className="pt-8 pb-4 space-y-1 text-cyan-950 text-sm ">
+              {signup && (
+                <li
+                  onClick={(e) => openProfile(e)}
+                  className=" flex pl-5 items-center py-3 m-2 cursor-pointer hover:shadow-2xl hover:border hover:border-cyan-500 duration-700 hover:rounded-lg"
+                >
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                    className="w-10"
+                    alt=""
+                  />
+                  <div>
+                    <h1 className="text-xl font-sans pl-6">
+                      {userData.username}
+                    </h1>
+                    <p className="pl-6 pt-2">{userData.name}</p>
+                  </div>
+                </li>
+              )}
               <li
                 onClick={(event) => handleClick(event)}
-                className="hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
+                className=" hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
               >
                 <a
                   href="#"
@@ -144,7 +154,7 @@ function HomePage() {
               </li>
               <li
                 onClick={(event) => handleClick(event)}
-                className=" hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
+                className="  hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
               >
                 <a
                   href="#"
@@ -166,7 +176,7 @@ function HomePage() {
               </li>
               <li
                 onClick={(event) => handleClick(event)}
-                className=" hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
+                className="  hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
               >
                 <a
                   href="#"
@@ -184,7 +194,7 @@ function HomePage() {
               </li>
               <li
                 onClick={(event) => handleClick(event)}
-                className=" hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
+                className="  hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
               >
                 <a
                   href="#"
@@ -200,11 +210,9 @@ function HomePage() {
                   <span>Trending</span>
                 </a>
               </li>
-            </ul>
-            <ul className="pt-4 mt-32  pb-2 space-y-1 text-sm">
               <li
                 onClick={(event) => handleClick(event)}
-                className=" hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
+                className="  hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
               >
                 <a
                   href="#"
@@ -221,45 +229,59 @@ function HomePage() {
                   <span>Settings</span>
                 </a>
               </li>
-              <li
-                onClick={() => SetLogOut()}
-                className="hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
-              >
-                <a
-                  href="#"
-                  className="flex items-center p-2 space-x-3 rounded-md"
+              {signup && (
+                <li
+                  onClick={() => SetLogOut()}
+                  className=" hover:shadow-lg text-lg px-5 m-2 hover:border hover:border-cyan-950 duration-700 round"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    className="w-6 h-6 fill-current text-cyan-800"
+                  <a
+                    href="#"
+                    className="flex items-center p-2 space-x-3 rounded-md"
                   >
-                    <path d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z"></path>
-                    <rect width="32" height="64" x="256" y="232"></rect>
-                  </svg>
-                  <span>Logout</span>
-                </a>
-              </li>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                      className="w-6 h-6 fill-current text-cyan-800"
+                    >
+                      <path d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z"></path>
+                      <rect width="32" height="64" x="256" y="232"></rect>
+                    </svg>
+                    <span>Logout</span>
+                  </a>
+                </li>
+              )}
             </ul>
           </aside>
           {renderActiveComponent()}
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <div
+        className="h-screen flex justify-center items-center"
+        style={{ backgroundImage: `url(${BG})`, backgroundSize: "cover" }}
+      >
+        <div className="bg-white px-20 py-10 shadow-lg">
+          <h2 className="text-2xl text-black">Do you want to Logout...?</h2>
+          <div className="mt-7 flex gap-10 justify-center">
+            <button
+              className="py-2 px-4 bg-cyan-800 text-white"
+              onClick={Cancel}
+            >
+              Cancel
+            </button>
+            <button
+              className="py-2 px-4 bg-cyan-800 text-white"
+              onClick={Logout}
+            >
+              Logout
+            </button>
           </div>
-        </>
-      )  
-    }
-    else{
-      return(
-          <div className="h-screen flex justify-center items-center" style={{ backgroundImage: `url(${BG})`, backgroundSize: "cover" }}>
-          <div className="bg-white px-20 py-10 shadow-lg">
-            <h2 className="text-2xl text-black">Do you want to Logout...?</h2>
-            <div className="mt-7 flex gap-10 justify-center">
-              <button className="py-2 px-4 bg-cyan-800 text-white" onClick={Cancel}>Cancel</button>
-              <button className="py-2 px-4 bg-cyan-800 text-white" onClick={Logout}>Logout</button>
-            </div>
-          </div>
-         </div>
-      )
-    }
+        </div>
+      </div>
+    );
+  }
 }
 
 export default HomePage;
