@@ -42,7 +42,7 @@ function Dashbord() {
   };
 
   const filteredData = selectedUsername
-    ? userData.filter((user) => user.username === selectedUsername)
+    ? userData.filter((user) => <user className="username"></user> === selectedUsername)
     : userData;
 
   return (
