@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "https://quirky-habits-hub.onrender.com/posts";
+const API_URL = "http://localhost:3000/posts";
 
 function Trending() {
   const [response, setResponse] = useState([]);
@@ -32,7 +32,7 @@ function Trending() {
   const LikeIncrease = (id) => {
     console.log(id);
     axios
-      .patch(`https://quirky-habits-hub.onrender.com/posts/${id}`)
+      .patch(`http://localhost:3000/posts/${id}`)
       .then((res) => {
         console.log("Response:", res.data);
         fetchData();

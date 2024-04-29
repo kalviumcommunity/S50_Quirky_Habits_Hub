@@ -33,7 +33,6 @@ function HomePage() {
   const handleClick = (event) => {
     if (!userData) {
       alert("Create An Account First");
-      // navigate("/login");
     } else {
       const spanContent = event.currentTarget.querySelector("span").textContent;
       setActiveComponent(spanContent.toLowerCase());

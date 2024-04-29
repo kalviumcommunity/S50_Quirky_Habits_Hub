@@ -5,7 +5,8 @@ const Joi = require('joi');
 
 // Joi schema for post validation
 const postSchema = Joi.object({
-  username: Joi.string().required(),
+  created_by : Joi.string().required(),
+  username : Joi.string().required(),
   title: Joi.string().required(),
   content: Joi.string().required(),
   link: Joi.string(),
@@ -51,7 +52,6 @@ router.get("/:id", async (req, res) => {
 // POST
 router.post("/", validatePost, async (req, res) => {
   try {
-    console.log(req.body)
     const data = await postmodel.create(req.body);
     res.json(data);
   } catch (err) {
@@ -62,17 +62,19 @@ router.post("/", validatePost, async (req, res) => {
   }
 });
 
-router.get('/:username', (req, res) => {
-  const username = req.params.username;
-  const userPosts = postmodel.filter(post => post.username === username);
-  res.json(userPosts);
-});
-
+router.get('/getmyposts/:id', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const posts = await postmodel.find({ created_by: userId });
+    res.json(posts);
+  } catch (err) {-
+    res.status(500).json({ message: err.message });
+  }
+})
 
 router.patch("/:id", async (req, res) => {
   try {
     const postId = req.params.id;
-
     const post = await postmodel.findById(postId);
 
     if (!post) {
