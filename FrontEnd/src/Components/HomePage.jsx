@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Dashbord from "./SideBar/Dashbord";
 import Posts from "./SideBar/Posts";
-import RankList from "./SideBar/Trending";
 import Users from "./SideBar/Users";
 import Settings from "./SideBar/Settings";
 import WLOGO from "../Assets/WLOGO.png";

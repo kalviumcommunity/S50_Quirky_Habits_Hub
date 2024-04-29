@@ -98,9 +98,7 @@ function Trending() {
         >
           <img className="h-96" alt="" />
         </div>
-
-        <div className="text-center"></div>
-
+  
         <div className="text-center">
           <button
             onClick={() => LikeIncrease(post._id)}
@@ -109,35 +107,17 @@ function Trending() {
             Like
           </button>
           <h2 className="text-xl font-semibold">Likes :- {post.reactions}</h2>
-
-    <div key={post.id} className="">
-      <div className="m-8 border border-cyan-700 p-10 ">
-        <h1 className="font-bold text-2xl border border-cyan-500 py-2 pl-5">
-          {post.username}
-        </h1>
-        <div className="flex items-center gap-10">
-          <div className="my-3 w-3/4 bg-slate-700">
-            <img className="" src={post.link} alt="" />
-          </div>
-
-          <div className="text-center">
-            <button className=" bg-cyan-700 mb-7 font-mono hover:shadow-xl duration-500 text-white rounded py-3 px-9">
-              Like
-            </button>
-            <h2 className="text-xl font-semibold">Likes :- {post.reactions}</h2>
-          </div>
         </div>
-        <h3 className="text-cyan-950 text-2xl font-semibold mb-3">
-          {post.title}
-        </h3>
-        <p className="text-lg text-cyan-900">
-          <span className="font-semibold">Description:</span> post
-          {post.content}
-        </p>
       </div>
+      <h3 className="text-cyan-950 text-2xl font-semibold mb-3">
+        {post.title}
+      </h3>
+      <p className="text-lg text-cyan-900">
+        <span className="font-semibold">Description:</span> {post.content}
+      </p>
     </div>
   );
-
+  
   return (
     <div>
       <div className="m-10">
