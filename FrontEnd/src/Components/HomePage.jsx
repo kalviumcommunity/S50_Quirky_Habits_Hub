@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import Dashbord from "./SideBar/Dashbord";
 import Posts from "./SideBar/Posts";
-import RankList from "./SideBar/Trending";
 import Users from "./SideBar/Users";
 import Settings from "./SideBar/Settings";
 import WLOGO from "../Assets/WLOGO.png";
@@ -13,6 +11,7 @@ import BG from "../Assets/BG.png";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Trending from "./SideBar/Trending";
+import axios from "axios";
 
 function HomePage() {
   const [activeComponent, setActiveComponent] = useState("home");
@@ -29,10 +28,10 @@ function HomePage() {
     }
   }, []);
 
-
   const handleClick = (event) => {
     if (!userData) {
       alert("Create An Account First");
+      // navigate("/login");
     } else {
       const spanContent = event.currentTarget.querySelector("span").textContent;
       setActiveComponent(spanContent.toLowerCase());
@@ -66,10 +65,17 @@ function HomePage() {
     setLogout(false);
   };
 
-  const Logout = () => {
-    Cookies.remove("userData");
-    alert("Logged Out Succussfully!");
-    window.location.reload();
+  const Logout = async () => {
+    try {
+      const response = await axios.post("http://localhost:3000/logout");
+      if (response) {
+        alert("Logged Out Successfully!");
+        Cookies.remove("userData")
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const SetLogOut = () => {

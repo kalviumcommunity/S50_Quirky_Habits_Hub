@@ -72,6 +72,7 @@ router.get('/getmyposts/:id', async (req, res) => {
   }
 })
 
+
 router.patch("/:id", async (req, res) => {
   try {
     const postId = req.params.id;

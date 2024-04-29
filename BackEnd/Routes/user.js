@@ -5,7 +5,8 @@ const Joi = require('joi');
 const app = express();
 const jwt = require('jsonwebtoken');
 app.use(express.json());
-
+const cookieParser = require('cookie-parser');
+router.use(cookieParser());
 
 // Destructure
 
@@ -148,6 +149,15 @@ function validateUpdatePartialUser(req, res, next) {
   }
   next();
 }
+
+router.get('/logout', (req, res) => {
+  // Clear cookies
+  res.clearCookie('userData');
+  res.clearCookie('Token');
+
+  res.send('Cookies cleared successfully');
+});
+
 
 router.patch("/:id", validateUpdatePartialUser, async (req, res) => {
   try {
