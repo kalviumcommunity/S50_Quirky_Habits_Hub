@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-  username: {
+  username : {
+    type: String,
+    required: true
+  },
+  created_by : {
     type: String,
     required: true
   },
@@ -23,10 +27,6 @@ const postSchema = new mongoose.Schema({
   time: {
     type: Date,
     default: Date.now
-  },
-  user:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref: "Users"
   }
 });
 

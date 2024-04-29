@@ -9,7 +9,7 @@ function Dashbord() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("https://quirky-habits-hub.onrender.com/posts");
+      const res = await axios.get("http://localhost:3000/posts");
       setUserData(res.data);
     } catch (error) {
       console.error("Error fetching data", error);
@@ -27,9 +27,8 @@ function Dashbord() {
       alert("Create an account");
     } else {
       axios
-        .patch(`https://quirky-habits-hub.onrender.com/posts/${id}`)
+        .patch(`http://localhost:3000/posts/${id}`)
         .then((res) => {
-          console.log("Response:", res.data);
           fetchData();
         })
         .catch(function (error) {
@@ -61,10 +60,10 @@ function Dashbord() {
             >
               All
             </option>
-            {userData.map((user) => (
+            {userData.map((user, index) => (
               <option
                 className="bg-cyan-900 text-white font-mono"
-                key={user.username}
+                key={index}
                 value={user.username}
               >
                 {user.username}

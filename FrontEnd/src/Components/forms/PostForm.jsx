@@ -23,9 +23,10 @@ function PostForm() {
     data.reactions = 0;
     if(myData){
       data.username = myData.username
+      data.created_by = myData._id
     }
 
-    axios.post( "https://quirky-habits-hub.onrender.com/posts", data)
+    axios.post( "http://localhost:3000/posts", data)
     .then((response) => {
       console.log("Post request successful:", response.data);
       navigate("/HomePage")

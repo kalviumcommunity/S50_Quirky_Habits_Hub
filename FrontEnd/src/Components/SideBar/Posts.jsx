@@ -23,13 +23,10 @@ function Posts() {
 
   const fetchUserPosts = async () => {
     try {
-      const username = myData.username;
-      const response = await axios.get(`https://quirky-habits-hub.onrender.com/posts`);
+      const id = myData._id;
+      const response = await axios.get(`http://localhost:3000/posts/getmyposts/${id}`);
       if (response.data) {
-        const filteredPosts = response.data.filter(
-          (post) => post.username === username
-        );
-        setPostsData(filteredPosts);
+        setPostsData(response.data);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -67,7 +64,7 @@ function Posts() {
                 </h1>
                 <div className="flex items-center gap-10">
                   <div
-                    style={{ backgroundImage: `url(${user.link})` }}
+                    style={{ backgroundImage: `url(${post.link})` }}
                     className="my-3 post w-3/4 "
                   >
                     <img className="h-96" alt="" />

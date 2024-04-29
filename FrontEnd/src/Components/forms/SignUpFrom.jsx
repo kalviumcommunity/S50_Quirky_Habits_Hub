@@ -21,17 +21,11 @@ function SignUpFrom() {
     setSub(true);
 
     try {
-      const response = await axios.post("https://quirky-habits-hub.onrender.com/users", data);
-
+      const response = await axios.post("http://localhost:3000/users", data);
       const { user, token } = response.data;
-      console.log("Token: ", token);
-      console.log("User: ", JSON.stringify(user));
-
       Cookies.set("userData", JSON.stringify(user));
       Cookies.set("Token", token);
-
       navigate("/HomePage");
-
       setData(data);
     } catch (error) {
       console.error("Error during POST request:", error);

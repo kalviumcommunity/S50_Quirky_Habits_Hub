@@ -25,7 +25,7 @@ function Profile() {
     console.log("Deleting account...");
 
     axios
-      .delete(`https://quirky-habits-hub.onrender.com/users/${userData._id}`)
+      .delete(`http://localhost:3000//users/${userData._id}`)
       .then((response) => {
         console.log("Account deleted successfully:", response.data);
         Cookies.remove("userData");
@@ -51,14 +51,11 @@ function Profile() {
   };
 
   const handleSubmission = async () => {
-    // Check if any data is updated
-    // Make a patch request to update the user data
-    console.log(userData, updatedUserData);
     const { email, username, name, phone_number } = updatedUserData;
 
     try {
       const response = await axios.patch(
-        `https://quirky-habits-hub.onrender.com/users/${userData._id}`,
+        `http://localhost:3000/users/${userData._id}`,
         { email, username, name, phone_number }
       );
 
@@ -66,15 +63,6 @@ function Profile() {
 
       setUserData(data);
       Cookies.set("userData", JSON.stringify(data));
-      console.log("data", data);
-
-      // setUpdatedUserData({
-      //   username:"",
-      //   name: "",
-      //   phone_number: "",
-      //   email: "",
-      // });
-
       setIsInputDisabled(true);
       setSubmit(!isSubmit);
       alert("Updation Completed Successfully");
